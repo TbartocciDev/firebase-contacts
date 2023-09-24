@@ -17,18 +17,22 @@ class ContactsViewController: UIViewController {
     
     let navTitle: UILabel = {
         let lbl = UILabel()
-        lbl.textColor = .white
+        lbl.textColor = UIColor(named: "FontColor") ?? .red
         return lbl
     }()
     
     let addBtn: UIButton = {
         let btn = UIButton()
+        btn.tintColor = UIColor(named: "FontColor") ?? .red
         return btn
     }()
     
     let searchBar: UITextField = {
         let txt = CustomSearchBar()
-        txt.placeholder = "search contacts..."
+        txt.backgroundColor = UIColor(named: "FontColor") ?? .red
+        txt.attributedPlaceholder = NSAttributedString(
+            string: "search contacts...",
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray3])
         return txt
     }()
     
@@ -85,7 +89,6 @@ class ContactsViewController: UIViewController {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.font = UIFont(name: "Avenir Next", size: 20)
         searchBar.layer.cornerRadius = 5
-        searchBar.backgroundColor = .white
         searchBar.delegate = self
         searchBar.addTarget(self, action: #selector(searchValueChanged), for: .editingChanged)
         navBar.addSubview(searchBar)
@@ -110,7 +113,6 @@ class ContactsViewController: UIViewController {
     private func addNavBarBtn(){
         addBtn.translatesAutoresizingMaskIntoConstraints = false
         addBtn.setImage(UIImage(systemName: "plus"), for: .normal)
-        addBtn.tintColor = .white
         addBtn.addTarget(self, action: #selector(addContactTapped), for: .touchUpInside)
         navBar.addSubview(addBtn)
         NSLayoutConstraint.activate([
@@ -147,13 +149,14 @@ class ContactsViewController: UIViewController {
         if (searchBar.text == "") {
             print("match")
             filteredContacts = contacts
-            contactsTableView.reloadData()
+            
         } else {
             guard let text = searchBar.text?.lowercased() else { return }
             print(text)
             filteredContacts = contacts.filter { $0.firstName.lowercased().contains(text) || $0.lastName.lowercased().contains(text)}
-            contactsTableView.reloadData()
         }
+        filteredContacts.sort { $0.lastName < $1.lastName }
+        contactsTableView.reloadData()
     }
     
 }

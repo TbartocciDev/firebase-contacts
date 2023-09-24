@@ -11,14 +11,12 @@ class ContactTableViewCell: UITableViewCell {
     
     let imgScale: CGFloat = 0.7
     let fontSize: CGFloat = 20
-    let fontColor: UIColor = .black
+    let fontColor: UIColor = .label
     
     let profilePicView: UIImageView = {
         let imgView = UIImageView()
         imgView.contentMode = .scaleAspectFit
-//        imgView.backgroundColor = .blue
         imgView.image = UIImage(named: "male")
-        imgView.tintColor = .systemPurple
         imgView.translatesAutoresizingMaskIntoConstraints = false
         return imgView
     }()

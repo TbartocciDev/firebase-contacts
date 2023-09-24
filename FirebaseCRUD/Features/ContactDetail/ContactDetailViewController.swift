@@ -37,6 +37,7 @@ class ContactDetailViewController: UIViewController {
     private let editBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(systemName: "pencil"), for: .normal)
+        btn.tintColor = .label
         return btn
     }()
     
@@ -123,7 +124,7 @@ class ContactDetailViewController: UIViewController {
         if (currentContact == nil) {
             actionsStackView.heightAnchor.constraint(equalToConstant: 0).isActive = true
             saveBtn.setTitle("Create", for: .normal)
-            deleteBtn.heightAnchor.constraint(equalToConstant: 0).isActive = true
+            deleteBtn.isHidden = true
         }
         guard let contact = currentContact else { return }
         updateUI(with: contact)
@@ -255,7 +256,6 @@ class ContactDetailViewController: UIViewController {
     private func addEditBtn() {
         self.contentView.addSubview(editBtn)
         editBtn.translatesAutoresizingMaskIntoConstraints = false
-        editBtn.tintColor = .black
         editBtn.addTarget(self, action: #selector(editPhoto), for: .touchUpInside)
         NSLayoutConstraint.activate([
             editBtn.leftAnchor.constraint(equalTo: profilePic.rightAnchor, constant: 10),
